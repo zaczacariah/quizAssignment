@@ -18,30 +18,52 @@
         <![endif]-->
 
         <div class="app__main app__flex">
-            <div class="app__highscore">
+            <div class="app__highscore-link">
                 <h2>View High Score</h2>
             </div>
             <div class="app__time">
                 <h2>Time: <span class="time__count">0</span></h2>
             </div>
 
-            <!-- <div class="quizWelcome">
+            <section class="app__quizWelcome">
                 <h1>Coding Quiz Challenge</h1>
                 <p>Try to answer the following code-related questions within the time limit. Keep in mind that incorrect answers will penalize your score/time by ten seconds!</p>
-                <button class="quizWelcome__start">Start Quiz</button>
+                <button class="app__quizWelcome__start">Start Quiz</button>
                 
-            </div> -->
+            </section>
 
-            <div class="app__quiz">
-                <p class="app__quiz-title">Question text</p>
+            <section class="app__quiz app__flex hide" data-q="1">
+                <p class="app__quiz-title"></p>
                 <div class="app__quiz-answers">
-                    <button class="quiz__answer">Answer 1</button>
-                    <button class="quiz__answer">Answer 2</button>
-                    <button class="quiz__answer">Answer 3</button>
-                    <button class="quiz__answer">Answer 4</button>
+                    <button class="quiz__answer">1. <span class="answer" data-answer="0"></span></button>
+                    <button class="quiz__answer">2. <span class="answer" data-answer="1"></span></button>
+                    <button class="quiz__answer">3. <span class="answer" data-answer="2"></span></button>
+                    <button class="quiz__answer">4. <span class="answer" data-answer="3"></span></button>
                 </div>
+            </section>
+            <section class="app__result app__flex hide">
+                <h1>All done!</h1>
+                <h2>Your final score is <span class="endScore"></span></h2>
+                <form onsubmit="handleSave(event)" name="saveScore">
+     
+                        <label for="">Enter initials: </label>
+                        <input type="text" required></input>
+          
+                    <button type="submit">Submit</button>
+                </form>
+            </section>
 
+            <div class="app__highscore app__flex col hide">
+                <h1>High scores</h1>
+                <ol class="app__highscores-board">
+
+                </ol>
+                <div class="app__flex row">
+                    <button class="back">Go back</button>
+                    <button class="clear">Clear high scores</button>
+                </div>
             </div>
+
         </div>
         
         <script src="./assets/js/script.js" async defer></script>
