@@ -17,7 +17,10 @@
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
 
+
         <div class="app__main app__flex">
+
+            <!-- High Score button -->
             <div class="app__highscore-link">
                 <h2>View High Score</h2>
             </div>
@@ -25,6 +28,7 @@
                 <h2>Time: <span class="time__count">0</span></h2>
             </div>
 
+            <!-- Welcome Section -->
             <section class="app__quizWelcome">
                 <h1>Coding Quiz Challenge</h1>
                 <p>Try to answer the following code-related questions within the time limit. Keep in mind that incorrect answers will penalize your score/time by ten seconds!</p>
@@ -32,6 +36,7 @@
                 
             </section>
 
+            <!-- Quiz Section -->
             <section class="app__quiz app__flex hide" data-q="1">
                 <p class="app__quiz-title"></p>
                 <div class="app__quiz-answers">
@@ -41,6 +46,8 @@
                     <button class="quiz__answer">4. <span class="answer" data-answer="3"></span></button>
                 </div>
             </section>
+
+            <!-- Result/End Section -->
             <section class="app__result app__flex hide">
                 <h1>All done!</h1>
                 <h2>Your final score is <span class="endScore"></span></h2>
@@ -53,6 +60,7 @@
                 </form>
             </section>
 
+            <!-- High Score Section -->
             <div class="app__highscore app__flex col hide">
                 <h1>High scores</h1>
                 <ol class="app__highscores-board">

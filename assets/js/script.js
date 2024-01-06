@@ -16,7 +16,7 @@ let quizEnd = document.querySelector('.app__result');
 let prevScore = 0;
 let quizHSButton = document.querySelector('.app__highscore-link');
 let quizHS = document.querySelector('.app__highscore');
-let quizBreak = false;
+
 // Delcare High score elements
 let clearButton = document.querySelector('.clear');
 let backButton = document.querySelector('.back')
@@ -78,20 +78,22 @@ let questions = [
     }
 ];
 
-// Event Handlooskies
+// Event start button
 startButton.addEventListener('click', function () {
 
     whereWasI = 'quiz';
     startScreen.classList.add('hide');
     quizContainer.classList.remove('hide');
-    initialiseQuiz();
-})
+    initialiseQuiz(); //Start Quiz
+});
 
+// Go to HighScores
 quizHSButton.addEventListener('click', () => {
     prevRoute = 'highscores';
     showHighScores();
 });
 
+//Handle the back button
 backButton.addEventListener('click', () => {
 
     // Check where we are going back to
@@ -137,16 +139,18 @@ backButton.addEventListener('click', () => {
     quizHSButton.classList.remove('hide');
 })
 
-// Reinitialise Scores
+// Reset Scores storage
 clearButton.addEventListener("click", () => {
     localStorage.setItem("HS", JSON.stringify([]));
     quizHS.children[1].innerHTML = '';
 });
 
+// Update le timer (duh)
 function updateTimer() {
     timeEl.textContent = timeLeft;
 }
 
+// Handle the timer and time out promise resolution
 function startTimer() {
     // Start the timer and update every second
     timer = setInterval(function() {
@@ -162,8 +166,9 @@ function startTimer() {
     }, 1000);
 }
 
+// Initialise the quiz - we are waiting for user input hence async
 async function initialiseQuiz() {
-    quizBreak = false;
+    // Reset the timer
     timeLeft = 75;
     
     timeEl.textContent = timeLeft;
@@ -172,9 +177,9 @@ async function initialiseQuiz() {
         startTimer();
         for (let question of questions){
             //Populate Quiz Question
-            quizQuestion.textContent = question.title;
-            quizAnswers.forEach((ans, index) => {
-                ans.textContent = question.answers[index].text;//probably need to get a property of ans isntead of ans
+                quizQuestion.textContent = question.title;
+                quizAnswers.forEach((ans, index) => {
+                ans.textContent = question.answers[index].text;
             });
 
             //Await for user Choice! (returning an index for selected value)
@@ -212,16 +217,11 @@ function waitForBroToAnswer() {
 
     // Create a new promise (more on return properties inside)
     return new Promise((resolve, reject) => {
-        //Access the resolve func outside of the loop
+        //Access the resolve func outside of the loop i.e. within timer
         promiseResolve = resolve;
         //Add event listener to the quizContainer and handle the click event inside ClickEvent
         quizContainer.addEventListener("click", event => { clickEvent(event, resolve) });
-        // if(timeLeft === 0){
-        //     quizContainer.removeEventListener("click", event => { clickEvent(event, resolve) });
-        //     reject(new Error("Timeout: User did not make a choice."));
-        // }
-
-        
+       
     })
 }
 
@@ -243,14 +243,20 @@ function clickEvent(event, resolve){
     
 }
 
-
+// Handle the save button function
 function handleSave(event) {
     event.preventDefault();
+
+    // Get the existing high scores, parse to JSON from string
     var highScores = JSON.parse(localStorage.getItem("HS")) || [];
 
+    // Create new score object
     var newScore = { name: event.target.elements[0].value, score: prevScore };
+
+    // Push the new score to the array
     highScores.push(newScore);
 
+    // Set the new high scores in local storage
     localStorage.setItem("HS", JSON.stringify(highScores));
 
     quizEnd.classList.add('hide');
@@ -259,22 +265,24 @@ function handleSave(event) {
     showHighScores();
 }
 
+// Handle the high scores function
 function showHighScores(){
-    // Clear the li's from the ol 
+    // Clear the li's from the ol incase of changes
     quizHS.children[1].innerHTML = '';
 
     // Grab the existing scores
     var highScores = JSON.parse(localStorage.getItem("HS")) || false;
     
 
-
+        // Populate ordered list with high scores
         highScores.forEach((score, index) => {
             var li = document.createElement('li');
 
             // Alt li bg color
             li.setAttribute(
                 "style", 
-                `background: ${index % 2 === 0 ? 'rgb(187 156 255 / 50%);' : 'rgb(156 166 255 / 50%);'}`)
+                `background: ${index % 2 === 0 ? 'rgb(187 156 255 / 50%);' : 'rgb(156 166 255 / 50%);'}`);
+            // Populate Li
             li.textContent = `${index+1}. ${score.name}: ${score.score}`;
             quizHS.children[1].appendChild(li);
         });
@@ -288,7 +296,5 @@ function showHighScores(){
         //show High Scores
         quizHSButton.classList.add('hide');
         quizHS.classList.remove('hide');
-
-    
 
 }
